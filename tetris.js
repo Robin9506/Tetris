@@ -11,7 +11,7 @@ const blockPadding = mapHeight/blockHeight;
 
 let position = -1;
 
-const gameSpeed = 8;
+let gameSpeed = 8;
 
 function drawMap(){    
     for (let x = 0.5; x <= mapWidth * 2 + 1; x+= mapHeight/blockHeight) {
@@ -34,9 +34,16 @@ function gameLoop(){
     
 }
 
+function getShape(block){
+
+}
+
 function drawShape(xPosition){
     ctx.fillStyle = "red";
     ctx.fillRect(mapPadding + 0.5, mapPadding + 0.5 + xPosition, blockPadding, blockPadding);
+    ctx.fillRect(mapPadding + 0.5 + 44.44, mapPadding + 0.5 + xPosition, blockPadding, blockPadding);
+    ctx.fillRect(mapPadding + 0.5 + 44.44, mapPadding + 0.5 + xPosition - 44.44 , blockPadding, blockPadding);
+    ctx.fillRect(mapPadding + 0.5 + 44.44, mapPadding + 0.5 + xPosition - 44.44 * 2 , blockPadding, blockPadding);
 }
 
 function updateMap(){   
@@ -45,11 +52,11 @@ function updateMap(){
         position = -1;
     }
 
-    ctx.clearRect(mapPadding + 1, mapPadding + 1, mapWidth - 1, mapHeight - 1)
-    
-    drawMap();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     position++;
     drawShape(position * blockPadding);
+    drawMap();
     
 }
 
