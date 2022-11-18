@@ -11,6 +11,8 @@ const blockPadding = mapHeight/blockHeight;
 
 let position = -1;
 
+const gameSpeed = 8;
+
 function drawMap(){    
     for (let x = 0.5; x <= mapWidth * 2 + 1; x+= mapHeight/blockHeight) {
         ctx.moveTo(mapPadding, x + mapPadding);
@@ -21,12 +23,14 @@ function drawMap(){
         ctx.moveTo(y + mapPadding, mapPadding);
         ctx.lineTo(y + mapPadding, mapHeight + mapPadding);       
     }
-    
+
+    ctx.strokeStyle = "black";
+    ctx.stroke();
 }
 
 function gameLoop(){
-    drawMap();
-    setInterval(updateMap, 1000/2)
+    setInterval(updateMap, 1000/gameSpeed)
+
     
 }
 
@@ -36,21 +40,22 @@ function drawShape(xPosition){
 }
 
 function updateMap(){   
+
     if (position >= blockHeight - 1) {
         position = -1;
     }
+
     ctx.clearRect(mapPadding + 1, mapPadding + 1, mapWidth - 1, mapHeight - 1)
+    
     drawMap();
     position++;
     drawShape(position * blockPadding);
     
 }
 
-drawMap();
 gameLoop();
 
-ctx.strokeStyle = "black";
-ctx.stroke();
+
 
 class Block {
     constructor(x, y, template){
