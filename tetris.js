@@ -19,11 +19,6 @@ function drawMap(){
         ctx.lineTo(y + mapPadding, mapHeight + mapPadding);       
     }
     
-    
-
-    
-
-    
 }
 
 drawMap();
@@ -32,3 +27,49 @@ ctx.strokeStyle = "black";
 ctx.stroke();
 
     drawMap();
+
+    class Block {
+    constructor(x, y, template){
+        this.x = x;
+        this.y = y;
+        this.template = template;
+    }
+}
+
+const blocks = [
+    new Block(0, 120, [
+        [0, 1, 0],
+        [0, 1, 0],
+        [1, 1, 0],
+    ]),
+
+    new Block(0, 120, [
+        [0, 1, 0],
+        [0, 1, 0],
+        [0, 1, 1],
+    ]),
+
+    new Block(0, 120, [
+        [0, 0, 0],
+        [0, 1, 0],
+        [1, 1, 1],
+    ]),
+
+    new Block(0, 120, [
+        [0, 0, 0],
+        [1, 1, 0],
+        [1, 1, 0],
+    ]),
+
+    new Block(0, 120, [
+        [0, 0, 0],
+        [0, 1, 1],
+        [1, 1, 0],
+    ]),
+
+    new Block(0, 120, [
+        [0, 0, 0],
+        [1, 1, 0],
+        [0, 1, 1],
+    ])
+]
