@@ -62,9 +62,7 @@ function drawShape(xPosition){
 
 function updateMap(){   
 
-    if (position >= blockHeight - 1) {
-        position = -1;
-    }
+    checkBlockPosition();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -72,6 +70,14 @@ function updateMap(){
     drawShape(position * blockPadding);
     drawMap();
     
+}
+
+function checkBlockPosition(){
+    if (position >= blockHeight - 1) {
+        position = -1;
+
+        blockPositionX = mapMiddleBlockPosition
+    }
 }
 
 gameLoop();
