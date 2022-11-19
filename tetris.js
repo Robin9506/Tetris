@@ -108,7 +108,7 @@ function getBlockTemplates(){
         for (let template = 0; template < blocks[randomBlock].template.length; template++) {                     
             for (let templateIndex = 0; templateIndex < blocks[randomBlock].template.length; templateIndex++) {
                 if(blocks[randomBlock].template[template][templateIndex] > 0){
-                    drawShapeFromTemplate(templateIndex  * blockPadding, template * blockPadding, blocks[randomBlock].color)
+                    drawShapeFromTemplate(templateIndex  * blockPadding - blockPadding, template * blockPadding - blockPadding * 2, blocks[randomBlock].color)
                 }                 
                 
             }  
