@@ -17,28 +17,29 @@ const keyCodes = {LEFT: 37, RIGHT: 39, DOWN: 40}
 
 let position = -1;
 let blockPositionX = mapMiddleBlockPosition;
+let blockPositionY = -1;
 
 let gameSpeed = 8;
 
 class Block {
-    constructor(x, y, template){
+    constructor(x, color, template){
         this.x = x;
-        this.y = y;
+        this.color = color;
         this.template = template;
     }
 }
 const blocks = [
-    // new Block(0, 120, [
-    //     [0, 1, 0],
-    //     [0, 1, 0],
-    //     [1, 1, 0],
-    // ]),
+    new Block(0, "blue", [
+        [0, 1, 0],
+        [0, 1, 0],
+        [1, 1, 0],
+    ]),
 
-    // new Block(0, 120, [
-    //     [0, 1, 0],
-    //     [0, 1, 0],
-    //     [0, 1, 1],
-    // ]),
+    new Block(0, "orange", [
+        [0, 1, 0],
+        [0, 1, 0],
+        [0, 1, 1],
+    ]),
 
     // new Block(0, 120, [
     //     [0, 0, 0],
@@ -82,7 +83,6 @@ function drawMap(){
 
 function gameLoop(){
     setInterval(updateMap, 1000/gameSpeed)
-    getBlockTemplates();
     moveBlock();
 
     
@@ -99,15 +99,17 @@ function moveBlock(event){
     }
 }
 
+function getRandomBlockShape(){
+    return Math.floor(Math.random() * blocks.length);
+}
+
 function getBlockTemplates(){
-    for (let block = 0; block < blocks.length; block++) {
-        for (let template = 0; template < blocks[block].template.length; template++) { 
-            // console.log(blocks[block].template[template]);                       
-            for (let templateIndex = 0; templateIndex < blocks[block].template.length; templateIndex++) {
-                if(blocks[block].template[template][templateIndex] > 0){
-                    drawShape2(templateIndex  * blockPadding, template * blockPadding)
-                }
-                console.log(blocks[block].template[template][templateIndex]);                       
+        let randomBlock = 1;        
+        for (let template = 0; template < blocks[randomBlock].template.length; template++) {                     
+            for (let templateIndex = 0; templateIndex < blocks[randomBlock].template.length; templateIndex++) {
+                if(blocks[randomBlock].template[template][templateIndex] > 0){
+                    drawShapeFromTemplate(templateIndex  * blockPadding, template * blockPadding, blocks[randomBlock].color)
+                }                 
                 
             }  
             
@@ -115,19 +117,10 @@ function getBlockTemplates(){
         
     }
     
-}
 
-function getShapeFromTemplates(){
-}
-
-function drawShape2(template, cube){
-    ctx.fillStyle = "green";
-    ctx.fillRect(mapPadding + 0.5 + template, mapPadding + 0.5 + cube, blockPadding, blockPadding);
-}
-
-function drawShape(xPosition){
-    ctx.fillStyle = "red";
-    ctx.fillRect(mapPadding + 0.5 + blockPositionX, mapPadding + 0.5 + xPosition, blockPadding, blockPadding);
+function drawShapeFromTemplate(x, y, color){
+    ctx.fillStyle = color;
+    ctx.fillRect(mapPadding + 0.5 + x + blockPositionX, mapPadding + 0.5 + y + blockPositionY, blockPadding, blockPadding);
 }
 
 function updateMap(){   
@@ -137,7 +130,8 @@ function updateMap(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     position++;
-    drawShape(position * blockPadding);
+    blockPositionY = position * blockPadding;
+    getBlockTemplates();
     drawMap();
     
 }
