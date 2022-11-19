@@ -1,3 +1,5 @@
+document.addEventListener('keydown', moveBlock);
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -9,7 +11,10 @@ const blockWidth = 9;
 const blockHeight = 18;
 const blockPadding = mapHeight/blockHeight;
 
+const mapMiddleBlockPosition = blockPadding * (blockWidth - 1) / 2 ;
+
 let position = -1;
+let blockPositionX = mapMiddleBlockPosition;
 
 let gameSpeed = 8;
 
@@ -30,8 +35,20 @@ function drawMap(){
 
 function gameLoop(){
     setInterval(updateMap, 1000/gameSpeed)
+    moveBlock();
 
     
+}
+
+function moveBlock(event){
+    let e = event.keyCode;
+    if (e == '37') {
+        blockPositionX = blockPositionX - blockPadding
+    }
+
+    if (e == '39') {
+        blockPositionX =  blockPositionX + blockPadding
+    }
 }
 
 function getShape(block){
@@ -40,10 +57,7 @@ function getShape(block){
 
 function drawShape(xPosition){
     ctx.fillStyle = "red";
-    ctx.fillRect(mapPadding + 0.5, mapPadding + 0.5 + xPosition, blockPadding, blockPadding);
-    ctx.fillRect(mapPadding + 0.5 + 44.44, mapPadding + 0.5 + xPosition, blockPadding, blockPadding);
-    ctx.fillRect(mapPadding + 0.5 + 44.44, mapPadding + 0.5 + xPosition - 44.44 , blockPadding, blockPadding);
-    ctx.fillRect(mapPadding + 0.5 + 44.44, mapPadding + 0.5 + xPosition - 44.44 * 2 , blockPadding, blockPadding);
+    ctx.fillRect(mapPadding + 0.5 + blockPositionX, mapPadding + 0.5 + xPosition, blockPadding, blockPadding);
 }
 
 function updateMap(){   
