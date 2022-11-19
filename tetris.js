@@ -18,6 +18,7 @@ const keyCodes = {LEFT: 37, RIGHT: 39, DOWN: 40}
 let position = -1;
 let blockPositionX = mapMiddleBlockPosition;
 let blockPositionY = -1;
+let randomBlock = 0;
 
 let gameSpeed = 8;
 
@@ -41,29 +42,29 @@ const blocks = [
         [0, 1, 1],
     ]),
 
-    // new Block(0, 120, [
-    //     [0, 0, 0],
-    //     [0, 1, 0],
-    //     [1, 1, 1],
-    // ]),
+    new Block(0, "purple", [
+        [0, 0, 0],
+        [0, 1, 0],
+        [1, 1, 1],
+    ]),
 
-    // new Block(0, 120, [
-    //     [0, 0, 0],
-    //     [1, 1, 0],
-    //     [1, 1, 0],
-    // ]),
+    new Block(0, "yellow", [
+        [0, 0, 0],
+        [1, 1, 0],
+        [1, 1, 0],
+    ]),
 
-    // new Block(0, 120, [
-    //     [0, 0, 0],
-    //     [0, 1, 1],
-    //     [1, 1, 0],
-    // ]),
+    new Block(0, "green", [
+        [0, 0, 0],
+        [0, 1, 1],
+        [1, 1, 0],
+    ]),
 
-    // new Block(0, 120, [
-    //     [0, 0, 0],
-    //     [1, 1, 0],
-    //     [0, 1, 1],
-    // ])
+    new Block(0, "red", [
+        [0, 0, 0],
+        [1, 1, 0],
+        [0, 1, 1],
+    ])
 ]
 
 function drawMap(){    
@@ -103,8 +104,7 @@ function getRandomBlockShape(){
     return Math.floor(Math.random() * blocks.length);
 }
 
-function getBlockTemplates(){
-        let randomBlock = 1;        
+function getBlockTemplates(){       
         for (let template = 0; template < blocks[randomBlock].template.length; template++) {                     
             for (let templateIndex = 0; templateIndex < blocks[randomBlock].template.length; templateIndex++) {
                 if(blocks[randomBlock].template[template][templateIndex] > 0){
@@ -141,6 +141,7 @@ function checkBlockPosition(){
         position = -1;
 
         blockPositionX = mapMiddleBlockPosition
+        randomBlock = getRandomBlockShape();
     }
 }
 
