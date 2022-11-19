@@ -10,7 +10,6 @@ const mapPadding = 10;
 const blockWidth = 9;
 const blockHeight = 18;
 const blockPadding = mapHeight/blockHeight;
-const blockTemplates = [];
 
 const mapMiddleBlockPosition = blockPadding * (blockWidth - 1) / 2 ;
 
@@ -29,41 +28,41 @@ class Block {
     }
 }
 const blocks = [
-    new Block(0, 120, [
-        [0, 1, 0],
-        [0, 1, 0],
-        [1, 1, 0],
-    ]),
+    // new Block(0, 120, [
+    //     [0, 1, 0],
+    //     [0, 1, 0],
+    //     [1, 1, 0],
+    // ]),
 
-    new Block(0, 120, [
-        [0, 1, 0],
-        [0, 1, 0],
-        [0, 1, 1],
-    ]),
+    // new Block(0, 120, [
+    //     [0, 1, 0],
+    //     [0, 1, 0],
+    //     [0, 1, 1],
+    // ]),
 
-    new Block(0, 120, [
-        [0, 0, 0],
-        [0, 1, 0],
-        [1, 1, 1],
-    ]),
+    // new Block(0, 120, [
+    //     [0, 0, 0],
+    //     [0, 1, 0],
+    //     [1, 1, 1],
+    // ]),
 
-    new Block(0, 120, [
-        [0, 0, 0],
-        [1, 1, 0],
-        [1, 1, 0],
-    ]),
+    // new Block(0, 120, [
+    //     [0, 0, 0],
+    //     [1, 1, 0],
+    //     [1, 1, 0],
+    // ]),
 
-    new Block(0, 120, [
-        [0, 0, 0],
-        [0, 1, 1],
-        [1, 1, 0],
-    ]),
+    // new Block(0, 120, [
+    //     [0, 0, 0],
+    //     [0, 1, 1],
+    //     [1, 1, 0],
+    // ]),
 
-    new Block(0, 120, [
-        [0, 0, 0],
-        [1, 1, 0],
-        [0, 1, 1],
-    ])
+    // new Block(0, 120, [
+    //     [0, 0, 0],
+    //     [1, 1, 0],
+    //     [0, 1, 1],
+    // ])
 ]
 
 function drawMap(){    
@@ -103,19 +102,27 @@ function moveBlock(event){
 function getBlockTemplates(){
     for (let block = 0; block < blocks.length; block++) {
         for (let template = 0; template < blocks[block].template.length; template++) { 
+            // console.log(blocks[block].template[template]);                       
             for (let templateIndex = 0; templateIndex < blocks[block].template.length; templateIndex++) {
-                return blocks[block].template[template][templateIndex];        
+                if(blocks[block].template[template][templateIndex] > 0){
+                    drawShape2(templateIndex  * blockPadding, template * blockPadding)
+                }
+                console.log(blocks[block].template[template][templateIndex]);                       
                 
             }  
-
-        }
             
+        }
+        
     }
-
+    
 }
 
 function getShapeFromTemplates(){
+}
 
+function drawShape2(template, cube){
+    ctx.fillStyle = "green";
+    ctx.fillRect(mapPadding + 0.5 + template, mapPadding + 0.5 + cube, blockPadding, blockPadding);
 }
 
 function drawShape(xPosition){
