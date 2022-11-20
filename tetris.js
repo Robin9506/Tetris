@@ -19,7 +19,8 @@ const keyCodes = {LEFT: 37, RIGHT: 39, DOWN: 40}
 let position = -1;
 let blockPositionX = mapMiddleBlockPosition;
 let blockPositionY = -1;
-let randomBlock = 0;
+let currentBlock = 0;
+let nextBlock = 0;
 
 let gameSpeed = 8;
 
@@ -91,7 +92,7 @@ function gameLoop(){
 function createMapGrid(){
     for (let x = 0; x < blockWidth; x++) {
         for (let y = 0; y < blockHeight; y++) {
-           addGridCoordinates(x,y)
+            initializeGrid(x,y)
             
         }
         
@@ -99,7 +100,12 @@ function createMapGrid(){
 
 }
 
-function addGridCoordinates(x, y){
+function initializeGame(){
+    currentBlock = getRandomBlockShape();
+    nextBlock = getRandomBlockShape();
+}
+
+function initializeGrid(x, y){
     map[x] = map[x] || [];
     map[x][y] = 0;
 
@@ -125,18 +131,19 @@ function getRandomBlockShape(){
 }
 
 function getBlockTemplate(){ 
-    const block = blocks[randomBlock].template;
+    const block = blocks[currentBlock].template;
         for (let template = 0; template < block.length; template++) { 
-            const element = blocks[randomBlock].template[template];
+            const element = blocks[currentBlock].template[template];
                 for (let templateArrayIndex = 0; templateArrayIndex < element.length; templateArrayIndex++) {
-                    if(blocks[randomBlock].template[template][templateArrayIndex] > 0){         
-                        drawShapeFromTemplate(templateArrayIndex  * blockPadding - blockPadding, template * blockPadding - blockPadding * 2, blocks[randomBlock].color)
+                    if(blocks[currentBlock].template[template][templateArrayIndex] > 0){         
+                        drawShapeFromTemplate(templateArrayIndex  * blockPadding - blockPadding, template * blockPadding - blockPadding * 2, blocks[currentBlock].color)
+                        //occupyGridCoordinates(templateArrayIndex, template);
                     }                 
-                
+                    
                 }  
-            
+                
             }
-        
+            
 }
 
 function addCurrentBlock(block){
@@ -165,10 +172,13 @@ function checkBlockPosition(){
         position = -1;
 
         blockPositionX = mapMiddleBlockPosition
-        randomBlock = getRandomBlockShape();
+        
+        currentBlock = nextBlock;
+        nextBlock = getRandomBlockShape();
     }
 }
 
+initializeGame();
 createMapGrid();
 gameLoop();
 
