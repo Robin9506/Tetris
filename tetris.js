@@ -101,8 +101,12 @@ function createMapGrid(){
 
 function addGridCoordinates(x, y){
     map[x] = map[x] || [];
-    map[x][y] = x + ';' + y;
+    map[x][y] = 0;
 
+}
+
+function occupyGridCoordinates(x,y){
+    map[x][y] = 1;
 }
 
 function moveBlock(event){
@@ -154,7 +158,6 @@ function updateMap(){
     blockPositionY = position * blockPadding;
     getBlockTemplate();
     drawMap();
-    
 }
 
 function checkBlockPosition(){
@@ -167,7 +170,6 @@ function checkBlockPosition(){
 }
 
 createMapGrid();
-console.log(map[8]);
 gameLoop();
 
 
