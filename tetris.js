@@ -104,19 +104,22 @@ function getRandomBlockShape(){
     return Math.floor(Math.random() * blocks.length);
 }
 
-function getBlockTemplates(){       
-        for (let template = 0; template < blocks[randomBlock].template.length; template++) {                     
-            for (let templateIndex = 0; templateIndex < blocks[randomBlock].template.length; templateIndex++) {
-                if(blocks[randomBlock].template[template][templateIndex] > 0){
-                    drawShapeFromTemplate(templateIndex  * blockPadding - blockPadding, template * blockPadding - blockPadding * 2, blocks[randomBlock].color)
-                }                 
+function getBlockTemplate(){ 
+    const block = blocks[randomBlock].template;
+        for (let template = 0; template < block.length; template++) { 
+            const element = blocks[randomBlock].template[template];
+                for (let templateArrayIndex = 0; templateArrayIndex < element.length; templateArrayIndex++) {
+                    if(blocks[randomBlock].template[template][templateArrayIndex] > 0){         
+                        drawShapeFromTemplate(templateArrayIndex  * blockPadding - blockPadding, template * blockPadding - blockPadding * 2, blocks[randomBlock].color)
+                    }                 
                 
-            }  
+                }  
             
-        }
+            }
         
-    }
-    
+}
+
+
 
 function drawShapeFromTemplate(x, y, color){
     ctx.fillStyle = color;
@@ -131,7 +134,7 @@ function updateMap(){
 
     position++;
     blockPositionY = position * blockPadding;
-    getBlockTemplates();
+    getBlockTemplate();
     drawMap();
     
 }
