@@ -6,6 +6,7 @@ const ctx = canvas.getContext("2d");
 const mapWidth = 400;
 const mapHeight = 800;
 const mapPadding = 10;
+let map = [];
 
 const blockWidth = 9;
 const blockHeight = 18;
@@ -84,9 +85,24 @@ function drawMap(){
 
 function gameLoop(){
     setInterval(updateMap, 1000/gameSpeed)
-    moveBlock();
+    moveBlock();  
+}
 
-    
+function createMapGrid(){
+    for (let x = 0; x < blockWidth; x++) {
+        for (let y = 0; y < blockHeight; y++) {
+           addGridCoordinates(x,y)
+            
+        }
+        
+    }
+
+}
+
+function addGridCoordinates(x, y){
+    map[x] = map[x] || [];
+    map[x][y] = x + ';' + y;
+
 }
 
 function moveBlock(event){
@@ -119,7 +135,9 @@ function getBlockTemplate(){
         
 }
 
-
+function addCurrentBlock(block){
+                 
+}
 
 function drawShapeFromTemplate(x, y, color){
     ctx.fillStyle = color;
@@ -148,6 +166,8 @@ function checkBlockPosition(){
     }
 }
 
+createMapGrid();
+console.log(map[8]);
 gameLoop();
 
 
