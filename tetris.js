@@ -11,6 +11,7 @@ let map = [];
 const blockWidth = 9;
 const blockHeight = 18;
 const blockPadding = mapHeight/blockHeight;
+let currentBlocks = [];
 
 const mapMiddleBlockPosition = blockPadding * (blockWidth - 1) / 2 ;
 
@@ -130,13 +131,13 @@ function getRandomBlockShape(){
     return Math.floor(Math.random() * blocks.length);
 }
 
-function getBlockTemplate(){ 
-    const block = blocks[currentBlock].template;
+function getBlockTemplate(blockNumber, xGrid, yGrid, currentX = 0, currentY = 0){ 
+    const block = blocks[blockNumber].template;
         for (let template = 0; template < block.length; template++) { 
-            const element = blocks[currentBlock].template[template];
+            const element = blocks[blockNumber].template[template];
                 for (let templateArrayIndex = 0; templateArrayIndex < element.length; templateArrayIndex++) {
-                    if(blocks[currentBlock].template[template][templateArrayIndex] > 0){         
-                        drawShapeFromTemplate(templateArrayIndex  * blockPadding - blockPadding, template * blockPadding - blockPadding * 2, blocks[currentBlock].color)
+                    if(blocks[blockNumber].template[template][templateArrayIndex] > 0){         
+                        drawShapeFromTemplate(templateArrayIndex + xGrid, template + yGrid, currentX, currentY, blocks[blockNumber].color)
                         //occupyGridCoordinates(templateArrayIndex, template);
                     }                 
                     
@@ -146,13 +147,30 @@ function getBlockTemplate(){
             
 }
 
-function addCurrentBlock(block){
-                 
+function addCurrentBlock(block, xGrid, yGrid){
+    currentBlockData = [block, xGrid, yGrid];
+    currentBlocks.push(currentBlockData);
 }
 
-function drawShapeFromTemplate(x, y, color){
+function drawCurrentBlocks(){
+    for (let block = 0; block < currentBlocks.length; block++) {
+        for (let position = 0; position < currentBlocks.length; position++) {
+            const block = currentBlocks[position][0];
+            const x = currentBlocks[position][1];
+            const y = currentBlocks[position][2];
+            getBlockTemplate(block, x, y);
+            
+        }
+        
+    }
+}
+
+function drawShapeFromTemplate(x, y, currentX, currentY, color){
     ctx.fillStyle = color;
-    ctx.fillRect(mapPadding + 0.5 + x + blockPositionX, mapPadding + 0.5 + y + blockPositionY, blockPadding, blockPadding);
+    ctx.fillRect(mapPadding + 0.5 + x * blockPadding - blockPadding + currentX,
+        mapPadding + 0.5 + y * blockPadding - blockPadding * 2 + currentY,
+        blockPadding,
+        blockPadding);
 }
 
 function updateMap(){   
@@ -163,7 +181,8 @@ function updateMap(){
 
     position++;
     blockPositionY = position * blockPadding;
-    getBlockTemplate();
+    getBlockTemplate(currentBlock, 1, 1, blockPositionX - blockPadding, blockPositionY - blockPadding);
+    drawCurrentBlocks();
     drawMap();
 }
 
@@ -171,6 +190,8 @@ function checkBlockPosition(){
     if (position >= blockHeight - 1) {
         position = -1;
 
+        addCurrentBlock(currentBlock, Math.round(blockPositionX / blockPadding), Math.round(blockPositionY / blockPadding));
+        
         blockPositionX = mapMiddleBlockPosition
         
         currentBlock = nextBlock;
